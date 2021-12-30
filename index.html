@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+<title>201503750 - 8 PUZZLE</title>
+<script type="text/javascript" src="vis-network.min.js"></script>
+<script type="text/javascript" src="beamsearch.js"></script>
+
+</head>
+<body>
+<p>Ingrese los valores del 8 puzzle y la heuristica para beam separada por guion [-] (1 para casillas fuera de lugar y 2 para manhattan) </p>
+<p>Ejemplo: 203156478-2</p>
+<input type="text" id="entrada"  value="" />
+<br/>
+<button onclick="recibirEntrada(entrada.value)" id="solveButton" >Resolver</button>
+<div id="container"></div>
+<script type="text/javascript">
+      function recibirEntrada(entrada) {
+            var container = document.getElementById("container");
+            var grafico = resolver(entrada)
+            console.log(grafico)
+            var parsedData = vis.parseDOTNetwork(grafico);
+            var data = {
+            nodes: parsedData.nodes,
+            edges: parsedData.edges
+            }
+            var options = {
+                  layout: {
+                        hierarchical: {
+                              levelSeparation: 80,
+                              nodeSpacing: 80,
+                              parentCentralization: true,
+                              direction: 'UD', 
+                              sortMethod: 'directed',
+                              shakeTowards: 'roots'
+                        },
+                  },                        
+            };
+            var network = new vis.Network(container, data, options);
+      }
+</script>  
+</body>
+</html>
